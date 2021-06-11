@@ -1,0 +1,31 @@
+spring:
+   cloud:
+     azure:
+       eventhub:
+         connection-string: ${EH_NS}
+         checkpoint-storage-account: scicoriabd
+         checkpoint-access-key: ${STG_KEY}
+         checkpoint-container: wingtiptoyscontainer
+
+     stream:
+       function:
+         definition: consume;supply;
+       bindings:
+         consume-in-0:
+           destination: wingtiptoyshub
+           group: $Default
+         supply-out-0:
+           destination: wingtiptoyshub
+
+       eventhub:
+         bindings:
+           consume-in-0:
+             consumer:
+               checkpoint-mode: MANUAL
+       default:
+         producer:
+           errorChannelEnabled: true
+
+       poller:
+         initial-delay: 0
+         fixed-delay: 1000
