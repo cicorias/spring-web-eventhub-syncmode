@@ -22,12 +22,6 @@ public class EventProducerConfiguration {
     }
 
     @Bean
-    public Sinks.One<Message<String>> one() {
-        return Sinks.one(); //..unicast().onBackpressureBuffer();
-        //Sinks.one().
-    }
-
-    @Bean
     public Supplier<Flux<Message<String>>> supply(Sinks.Many<Message<String>> many) {
         return () -> many.asFlux()
                          .doOnNext(m -> LOGGER.info("Manually sending message {}", m))

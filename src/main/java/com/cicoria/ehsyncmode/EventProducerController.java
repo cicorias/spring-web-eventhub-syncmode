@@ -24,9 +24,6 @@ public class EventProducerController {
     @Autowired
     private Sinks.Many<Message<String>> many;
 
-    @Autowired
-    public Sinks.One<Message<String>> one;
-
     @PostMapping("/messages")
     public ResponseEntity<String> sendMessage(@RequestParam String message) {
         LOGGER.info("Going to add message {} to sendMessage.", message);
